@@ -71,7 +71,57 @@ acoustically and remain easy to separate; wav2vec2 scores ~0.88 either way.
 Plants, birds and text have both: *Sedum* species are visually confusable,
 `comp.*` newsgroups share vocabulary.
 
-### This is a fact about the dataset, not about audio
+## ESC-50: a genuinely hard audio task, and the trap still does not fire
+
+Speech Commands was the wrong instrument, so here is a right one. ESC-50 is 2,000
+clips over 50 classes — **40 per class** — with a documented two-level hierarchy
+and within-category confusions that are acoustic rather than semantic:
+`rain / sea_waves / water_drops` are all water; `airplane / helicopter` are both
+motors. Encoder is AST trained on AudioSet: general audio, not speech, not tuned
+on ESC-50.
+
+| arm | coverage | precision | label-level | top-1 |
+|---|---|---|---|---|
+| varied (5 groups) | 0.832 | 0.991 | 0.964 | **1.000** |
+| crowded (2 groups) | 0.736 | 0.870 | 0.857 | **0.857** |
+
+**The crowded arm is genuinely harder** — top-1 falls from 1.000 to 0.857, so
+condition 2 is satisfied at last. And every metric moves the *honest* direction:
+coverage down, precision down, label-level down. There is no trap here, because
+there is nothing hidden. A user reading coverage and precision would correctly
+conclude this model is worse.
+
+Why: the cascade still never falls back to the group rank (`t_label` = 0.0092).
+Coarse accuracy exceeds fine accuracy by only **+0.077** — not enough to make
+retreating to the group worth its risk under the declared utility.
+
+### The quantity that looks like it governs this
+
+Across every crowded arm run so far, the gap between coarse and fine accuracy —
+call it *headroom* — tracks whether the trap appears:
+
+| crowded arm | fine | coarse | headroom | Δcoverage | Δlabel-level |
+|---|---|---|---|---|---|
+| text (newsgroups) | 0.771 | 0.965 | **+0.194** | **+0.216** | **−0.326** |
+| birds (image) | 0.905 | 0.998 | +0.093 | — | — |
+| kws acoustic | 0.887 | 0.974 | +0.087 | +0.196 | +0.030 |
+| ESC-50 | 0.913 | 0.990 | +0.077 | −0.095 | −0.107 |
+| kws semantic | 0.897 | 0.947 | +0.050 | −0.027 | −0.077 |
+
+Large headroom means a coarse answer is much safer than a fine one, so the
+cascade retreats constantly: coverage inflates while label-level collapses. Small
+headroom means retreating buys nothing and the model just degrades visibly.
+
+This subsumes the two conditions above — group cohesion without within-group
+difficulty leaves fine accuracy high and headroom small; difficulty without
+cohesion leaves coarse accuracy no better than fine.
+
+**This is a hypothesis the data suggests, not a finding.** Four arms with both
+deltas is far too few for the correlations to mean anything, and `kws acoustic`
+already breaks the pattern — small headroom, large coverage inversion. It is
+recorded because it is testable, not because it is established.
+
+### Speech Commands was a fact about the dataset, not about audio
 
 **Speech Commands is the MNIST of audio** — isolated single words, clean
 recordings, thousands of examples per class, chosen for exactly the tractability

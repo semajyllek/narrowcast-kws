@@ -1,0 +1,6 @@
+task: esc50-crowded
+data:
+  embeddings: /tmp/esc50_crowded.npz
+  background: { embeddings: /tmp/esc50_bg.npz }
+objective: { metric: label_share, minimum: 0.0 }
+constraints: { encoders: [ast-audioset] }
