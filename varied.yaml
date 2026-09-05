@@ -1,0 +1,6 @@
+task: keyword-spotting-varied
+data:
+  embeddings: /tmp/kws_varied.npz
+  background: { embeddings: /tmp/kws_bg.npz }
+objective: { metric: label_share, minimum: 0.0 }
+constraints: { encoders: [wav2vec2-base] }
