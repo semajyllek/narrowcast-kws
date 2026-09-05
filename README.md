@@ -16,7 +16,7 @@ one fine-tuned on this dataset.
 Nothing in narrowcast changed to support audio. The tool takes a dataset; the
 modality-specific part is `embed.py`, 90 lines, in this repo.
 
-## The result: a partial non-replication, and what it isolates
+## The result: a partial non-replication, on a dataset that was the wrong choice
 
 narrowcast's central finding is that a label set crowded with siblings of one
 group buys **coverage** with coarse answers that narrow nothing, so the two
@@ -59,26 +59,45 @@ Closed-set top-1 is 0.883 against 0.878 — the crowded arm is not harder.
 
 ## What this decomposes
 
-The trap needs **two independent conditions**, and this domain supplies one:
+The trap needs **two independent conditions**:
 
 1. **Group cohesion in the encoder's space** — so probability mass sums at group
-   rank, γ rises, and declining stops firing. *Audio: yes, once grouped
-   acoustically.*
+   rank, γ rises, and declining stops firing.
 2. **Within-group difficulty** — so the top label posterior is split and the
-   cascade retreats to the group. *Audio: no.* `five` and `four` cluster together
-   yet remain easy to separate; wav2vec2 gets ~0.88 either way.
+   cascade retreats to the group.
 
+Speech Commands supplies the first and not the second. `five` and `four` cluster
+acoustically and remain easy to separate; wav2vec2 scores ~0.88 either way.
 Plants, birds and text have both: *Sedum* species are visually confusable,
-`comp.*` newsgroups share vocabulary. Speech Commands, at 6 words with thousands
-of clips each, simply is not a hard within-group problem.
+`comp.*` newsgroups share vocabulary.
 
-**So the warning narrowcast prints on a crowded label set is a warning about a
-risk, not a prediction of harm** — and this repo is the case that shows the
-difference.
+### This is a fact about the dataset, not about audio
+
+**Speech Commands is the MNIST of audio** — isolated single words, clean
+recordings, thousands of examples per class, chosen for exactly the tractability
+that makes it a poor test of condition 2. It was the wrong dataset for the
+question, and choosing it is the mistake this section records.
+
+Audio supplies genuinely hard within-group discrimination in plenty of places:
+
+- **congeneric bird song** — the acoustic mirror of the bird *image* arm already
+  run, with the same genus/species hierarchy and species that genuinely sound alike
+- **accented or noisy speech**, where minimal pairs collapse
+- **respiratory and heart sounds** — crackle vs wheeze subtypes, murmur classes
+- **machine fault types**, where bearing and gear faults share a spectral family
+- **dialect and closely-related-language ID**
+
+Any of those would test condition 2 properly. **None has been run here**, so this
+repo shows only that condition 1 can be satisfied and condition 2 can be absent —
+not that audio lacks condition 2.
+
+**The warning narrowcast prints on a crowded label set is a warning about a risk,
+not a prediction of harm.** That much this repo does establish, and it is the
+useful part.
 
 ## Limits
 
 One encoder, one corpus, six labels per arm, no cluster column (clips are
-independent, and the card records that its intervals are anticonservative).
-A harder keyword set — accented speech, noise, more confusable vocabulary, fewer
-examples — would test condition 2 properly, and has not been run.
+independent, and the card records that its intervals are anticonservative). The
+corpus was chosen for convenience and turned out to be unsuited to half the
+question; a hard-within-group audio task remains the right next test.
