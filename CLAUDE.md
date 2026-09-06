@@ -29,7 +29,7 @@ Two things were learned the hard way:
 ## The hypothesis this repo raised — now tested, and it held
 
 **Headroom** — coarse-rank accuracy minus fine-rank accuracy — governs retreat to
-the group rank. Tested in plantid over 1,409 arms (`HEADROOM_FINDINGS.md`):
+the group rank. Tested in narrowcast-plantid over 1,409 arms (`HEADROOM_FINDINGS.md`):
 cross-validated **R² 0.883**, against 0.362 for fine accuracy alone. Fitted on
 plants alone it predicts these audio arms with MAE 0.033. Roughly,
 **group-answer share ≈ 1.8 × headroom**.
