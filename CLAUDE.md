@@ -26,14 +26,30 @@ Two things were learned the hard way:
    motor sounds) is the harder test, and there the crowded arm *is* harder
    (top-1 1.000 → 0.857) yet every metric still moves the honest direction.
 
-## The open hypothesis
+## The hypothesis this repo raised — now tested, and it held
 
-**Headroom** — coarse-rank accuracy minus fine-rank accuracy — looks like the
-quantity that governs whether the trap fires. Large headroom makes retreating to
-the group attractive; small headroom means retreating buys nothing.
+**Headroom** — coarse-rank accuracy minus fine-rank accuracy — governs retreat to
+the group rank. Tested in plantid over 1,409 arms (`HEADROOM_FINDINGS.md`):
+cross-validated **R² 0.883**, against 0.362 for fine accuracy alone. Fitted on
+plants alone it predicts these audio arms with MAE 0.033. Roughly,
+**group-answer share ≈ 1.8 × headroom**.
 
-n=4 arms, and `kws acoustic` already breaks it. **Hypothesis, not a finding.**
-Testing it on more arms is the most useful next thing in any of the three repos.
+**`kws acoustic` is not the counterexample it looked like.** Decomposing its
+coverage gain shows the group answers came out of *declines* (0.430 → 0.199), not
+out of label answers — coverage inflated while label share held. Text's came out
+of label answers (0.719 → 0.302) and quality collapsed. Same mechanism, two
+different shadows.
+
+So the sharper version of what this repo established: **headroom predicts
+retreat, not harm.** Whether retreat costs anything depends on which pool the
+group answers are drawn from, and both happen. The warning stays a warning about
+a risk.
+
+*(Caveats carried over from the test: headroom is very nearly but not exactly the
+governing quantity — coarse accuracy weighs ~25% more, which is the same
+break-even threshold effect seen twice — and the `1.8 ×` rule **under-predicts at
+high headroom**, so read it as a floor. On these audio arms specifically it is
+accurate to ~0.02; on text-crowded it is low by 0.136.)*
 
 ## Practical
 
