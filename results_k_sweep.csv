@@ -1,0 +1,9 @@
+clustering,K,draws,d_reserved,sd_reserved,d_mixed,sd_mixed,baseline_top1
+preregistered,5,15,-0.2141,0.0759,0.0758,0.0336,0.7684
+preregistered,10,15,-0.1862,0.0997,0.0923,0.0316,0.6792
+preregistered,20,15,-0.1807,0.0499,0.109,0.0228,0.6047
+preregistered,35,15,-0.1854,0.0357,0.1257,0.0136,0.545
+residualised,5,15,-0.2096,0.0961,0.084,0.0444,0.7471
+residualised,10,15,-0.1866,0.1004,0.1163,0.0372,0.6587
+residualised,20,15,-0.175,0.066,0.1183,0.0193,0.5917
+residualised,35,15,-0.1507,0.0449,0.1379,0.0118,0.5349
