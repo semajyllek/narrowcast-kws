@@ -1,0 +1,40 @@
+
+35 words, 2382 speakers, 8 acoustic groups
+  g0: cat
+  g1: backward bird dog down learn marvin nine on one
+  g2: eight left right three
+  g3: sheila tree two visual
+  g4: five follow forward four off
+  g5: go no up wow
+  g6: house seven six stop yes zero
+  g7: bed happy
+
+CROWDED (7): backward bird dog down learn marvin nine
+  groups: ['g1']
+VARIED  (7): eight off two zero up cat marvin
+  groups: ['g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6']
+
+=== K=7  VARIED (separated)  [wav2vec2-base] ===
+   shots  label_share   coverage  precision     top1  headroom
+       1       0.0004     0.0004          —   0.2895    0.0000   (n=12, answered 8)
+       2       0.0008     0.0007          —   0.3780    0.0000   (n=12, answered 10)
+       4       0.0304     0.0257     0.7369   0.5009    0.0000   (n=12, answered 455)
+       8       0.1248     0.1025     0.8503   0.5907    0.0000   (n=12, answered 1742)
+      16       0.2812     0.2327     0.8910   0.6887    0.0000   (n=12, answered 4106)
+      32       0.4166     0.3433     0.9152   0.7729    0.0000   (n=12, answered 5709)
+      64       0.5347     0.4414     0.9330   0.8322    0.0000   (n=12, answered 7165)
+     all       0.6548     0.5409     0.9433   0.8826    0.0000   (n=12, answered 8297)
+
+=== K=7  CROWDED  [wav2vec2-base] ===
+   shots  label_share   coverage  precision     top1  headroom
+       1       0.0013     0.3628     0.9094   0.2392    0.7619   (n=12, answered 7673)
+       2       0.0005     0.4219     0.9199   0.2919    0.6994   (n=12, answered 8308)
+       4       0.0011     0.4773     0.9256   0.3940    0.6057   (n=12, answered 8788)
+       8       0.0696     0.5018     0.9258   0.5363    0.4597   (n=12, answered 8692)
+      16       0.2100     0.5218     0.9248   0.6575    0.3456   (n=12, answered 8711)
+      32       0.3782     0.5840     0.9247   0.7440    0.2609   (n=12, answered 9705)
+      64       0.4552     0.6192     0.9326   0.8057    0.1991   (n=12, answered 9965)
+     all       0.5857     0.6545     0.9493   0.8582    0.1443   (n=12, answered 9820)
+
+ered 28769)
+
